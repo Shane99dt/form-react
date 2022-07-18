@@ -1,5 +1,7 @@
 import React from "react";
 const listtable = []
+const regex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/
+
 class App extends React.Component {
   constructor(){
     super()
@@ -20,6 +22,7 @@ handleSubmit = (e) => {
   // if(this.state.emailIsValid && this.state.passwordIsValid){
 
   // }
+  console.log(this.state)
   console.log(listtable)
   this.resetState()
 }
@@ -31,17 +34,7 @@ handleSubmit = (e) => {
 //   })
 // }
 
-// emailValidation = () => {
-  // const regex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/
-  // if(regex.test(this.state.email)){
-  //   this.setState({
-  //     emailIsValid: true
-  //   })
-  // }
-// }
-
 handleEmailChange = (e) => {
-  const regex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
   this.setState({
     email: e.target.value
@@ -51,7 +44,7 @@ handleEmailChange = (e) => {
     this.setState({
       emailIsValid: true,
     })
-    console.log('fuckkkk')
+
   }
 }
 
