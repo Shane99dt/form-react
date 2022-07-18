@@ -1,5 +1,5 @@
 import React from "react";
-// const listtable = []
+
 const regex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/
 let borderMail = "2px solid red"
 let borderpassword = "2px solid red"
@@ -9,6 +9,8 @@ class App extends React.Component {
     super()
 
     this.state = {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       rememberMe: false,
@@ -21,15 +23,17 @@ class App extends React.Component {
 
 handleSubmit = (e) => {
   e.preventDefault()
-  if(this.state.emailIsValid && this.state.passwordIsValid){
+  if(this.state.emailIsValid == true && this.state.passwordIsValid == true){
     this.setState({
-      isSubmitted : true
+      isSubmitted: true
     })
+    console.log(this.state.emailIsValid)
+    console.log(this.state.passwordIsValid)
     console.log(this.state)
     this.resetValues()
-
   }else{
     alert('Fill the fields correctly')
+    console.log(this.state.isSubmitted)
   }
 }
 
@@ -40,8 +44,19 @@ handleSubmit = (e) => {
 //   })
 // }
 
-handleEmailChange = (e) => {
+handleFirstNameChange = (e) => {
+  this.setState({
+    firstName: e.target.value
+  })
+}
 
+handleLastNameChange = (e) => {
+  this.setState({
+    lastName: e.target.value
+  })
+}
+
+handleEmailChange = (e) => {
   this.setState({
     email: e.target.value
   })
@@ -51,6 +66,9 @@ handleEmailChange = (e) => {
       emailIsValid: true,
     })
     borderMail = "2px solid green"
+    document.getElementById('emailInput').classList.add('is-valid')
+  }else{
+    borderMail = "2px solid red"
   }
 }
 
@@ -65,7 +83,9 @@ handlePasswordChange =(e) => {
       passwordIsValid: true
     })
     borderpassword = "2px solid green"
-
+    document.getElementById('passwordInput').classList.add('is-valid')
+  }else{
+    borderpassword = "2px solid red"
   }
 }
 
@@ -78,6 +98,8 @@ handleRememberMeChange =(e) => {
 
 resetValues = () => {
   this.setState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     rememberMe: false,
@@ -87,14 +109,28 @@ resetValues = () => {
   })
   borderMail = "2px solid red"
   borderpassword = "2px solid red"
+  document.getElementById('emailInput').classList.remove('is-valid')
+  document.getElementById('passwordInput').classList.remove('is-valid')
+
 }
 
   render() {
     return (
       <div className="d-flex align-items-center flex-column mt-4">
         <h1>Login</h1>
-        {this.state.isSubmitted ? <p>Hello here</p> :
-          <form onSubmit={this.handleSubmit}>
+        {this.state.isSubmitted ? <p>Hello there {this.state.firstName} {this.state.lastName}, Welcome </p> : <form onSubmit={this.handleSubmit}>
+
+            {/* firstName */}
+            <div className="mb-3">
+              <label htmlFor="fNameInput" className="form-label">First Name</label>
+              <input type="text" name='firstName' className="form-control" id="fNameInput" value={this.state.firstName} onChange={this.handleFirstNameChange} required/>
+            </div>
+
+            {/* lastName */}
+            <div className="mb-3">
+              <label htmlFor="lNameInput" className="form-label">Last Name</label>
+              <input type="text" name='lastName' className="form-control" id="lNameInput" value={this.state.lastName} onChange={this.handleLastNameChange} required/>
+            </div>
 
             {/* email */}
             <div className="mb-3">
@@ -105,12 +141,12 @@ resetValues = () => {
             {/* password */}
             <div className="mb-3">
               <label htmlFor="passwordInput" className="form-label">Password</label>
-              <input type="password" name='password' className="form-control" id="exampleInputPassword1" value={this.state.password} onChange={this.handlePasswordChange} required style={{border: borderpassword}}/>
+              <input type="password" name='password' className="form-control" id="passwordInput" value={this.state.password} onChange={this.handlePasswordChange} required style={{border: borderpassword}}/>
             </div>
 
             {/* checkbox */}
             <div className="mb-3 form-check">
-              <input type="checkbox" name='rememberMe' className="form-check-input" id="exampleCheck1" value={this.state.rememberMe} onChange={this.handleRememberMeChange}/>
+              <input type="checkbox" name='rememberMe' className="form-check-input" id="checkboxInput" value={this.state.rememberMe} onChange={this.handleRememberMeChange}/>
               <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
             </div>
 
