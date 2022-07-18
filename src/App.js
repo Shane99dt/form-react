@@ -21,21 +21,7 @@ class App extends React.Component {
   }
 
 
-handleSubmit = (e) => {
-  e.preventDefault()
-  if(this.state.emailIsValid == true && this.state.passwordIsValid == true){
-    this.setState({
-      isSubmitted: true
-    })
-    console.log(this.state.emailIsValid)
-    console.log(this.state.passwordIsValid)
-    console.log(this.state)
-    this.resetValues()
-  }else{
-    alert('Fill the fields correctly')
-    console.log(this.state.isSubmitted)
-  }
-}
+
 
 // handleChange = (e) => {
 //   const target = e.target
@@ -111,14 +97,28 @@ resetValues = () => {
   borderpassword = "2px solid red"
   document.getElementById('emailInput').classList.remove('is-valid')
   document.getElementById('passwordInput').classList.remove('is-valid')
+}
 
+handleSubmit = (e) => {
+  e.preventDefault()
+
+  if(this.state.emailIsValid && this.state.passwordIsValid){
+    this.setState({
+      isSubmitted : true
+    })
+    console.log(this.state)
+  }else{
+    alert('Fill the fields correctly')
+  }
+
+  this.resetValues()
 }
 
   render() {
     return (
       <div className="d-flex align-items-center flex-column mt-4">
         <h1>Login</h1>
-        {this.state.isSubmitted ? <p>Hello there {this.state.firstName} {this.state.lastName}, Welcome </p> : <form onSubmit={this.handleSubmit}>
+        {this.state.isSubmitted ? (<p>Hello there {this.state.firstName} {this.state.lastName}, Welcome </p>) : (<form onSubmit={this.handleSubmit}>
 
             {/* firstName */}
             <div className="mb-3">
@@ -152,7 +152,7 @@ resetValues = () => {
 
             {/* submit */}
             <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
+          </form>)
         }
       </div>
     );
